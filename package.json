@@ -12,6 +12,8 @@
   "dependencies": {
     "axios": "^0.16.2",
     "bitcore-lib-dash": "^0.14.3",
-    "bitcore-mnemonic-dash": "^1.2.3"
+    "bitcore-mnemonic-dash": "^1.2.3",
+    "eventemitter": "^0.3.3",
+    "eventemitter2": "^5.0.0"
   }
 }
