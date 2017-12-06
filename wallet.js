@@ -149,7 +149,7 @@ class Wallet {
         let inputs = await this.getAvailableInputs();
 
         inputs = inputs.sort(function (a, b) {
-            return a.balance > b.balance
+            return a.balance < b.balance
         });
 
         // 1) Search for inputs with sufficiant amount
@@ -229,11 +229,11 @@ class Wallet {
             let sumUtxos = utxos.reduce((acc, cur) => {
                 return acc + cur.satoshis
             }, 0);
+
+            let utxosSatoshis = sumUtxos;
             if (isInstant && utxosSatoshis>ISconditions.maxValue){
                 throw new Error(`MaxOutput value too big  more than ${ISconditions.maxValue} utxos `);
             }
-            let utxosSatoshis = sumUtxos;
-
             let toSatoshis = amount * 1e8;
             let feeSatoshis = (isInstant === true) ? (100000) : (1000);
             let changeSatoshis = utxosSatoshis - toSatoshis - feeSatoshis
@@ -250,6 +250,7 @@ class Wallet {
                 feeSatoshis: feeSatoshis,
                 privateKey: inputs.keys.private.privateKey.toString()
             });
+            console.log('Raw tx :', tx.toString());
             let txid = await this.broadcastTransaction(isInstant, tx.toString(), 'testnet');
             console.log(`TXID: ${txid}`);
 
